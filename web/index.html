@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ESP32 WiFi PenTool</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="glitch" data-text="ESP32 WiFi PenTool">
+          ESP32 WiFi PenTool
+        </div>
+        <div id="status-indicator" class="status-ready">READY</div>
+      </header>
+
+      <nav>
+        <button class="nav-btn active" onclick="showTab('dashboard')">
+          DASHBOARD
+        </button>
+        <button class="nav-btn" onclick="showTab('attacks')">ATTACKS</button>
+        <button class="nav-btn" onclick="showTab('logs')">LOGS</button>
+      </nav>
+
+      <main>
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content active">
+          <div class="card">
+            <h2>Target Scanner</h2>
+            <div class="controls">
+              <button onclick="scanAPs()" class="btn-action">SCAN APs</button>
+            </div>
+            <div class="table-container">
+              <table id="ap-table">
+                <thead>
+                  <tr>
+                    <th>SSID</th>
+                    <th>BSSID</th>
+                    <th>RSSI</th>
+                    <th>Select</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- APs will be populated here -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Attacks Tab -->
+        <div id="attacks" class="tab-content">
+          <div class="grid-2">
+            <!-- Target Info -->
+            <div class="card">
+              <h2>Selected Target</h2>
+              <div id="selected-target">None</div>
+              <input type="hidden" id="target-bssid" />
+              <input type="hidden" id="target-channel" />
+            </div>
+
+            <!-- Attack Controls -->
+            <div class="card">
+              <h2>Attack Control</h2>
+
+              <div class="attack-group">
+                <h3>Capture</h3>
+                <button onclick="startAttack('HANDSHAKE')" class="btn-attack">
+                  HANDSHAKE (Deauth)
+                </button>
+                <button onclick="startAttack('PMKID')" class="btn-attack">
+                  PMKID
+                </button>
+              </div>
+
+              <div class="attack-group">
+                <h3>Disruption</h3>
+                <button onclick="startAttack('DOS')" class="btn-attack">
+                  DOS (Deauth All)
+                </button>
+                <button onclick="startAttack('BEACON_SPAM')" class="btn-attack">
+                  BEACON SPAM
+                </button>
+              </div>
+
+              <div class="attack-group">
+                <h3>Surveillance</h3>
+                <button onclick="startAttack('PROBE_SNIFF')" class="btn-attack">
+                  PROBE SNIFF
+                </button>
+              </div>
+
+              <div class="control-group">
+                <button onclick="stopAttack()" class="btn-stop">
+                  STOP ATTACK
+                </button>
+                <button onclick="resetState()" class="btn-reset">
+                  RESET STATE
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Logs Tab -->
+        <div id="logs" class="tab-content">
+          <div class="card terminal">
+            <div id="log-output">
+              <span class="sys-msg">> System initialized...</span><br />
+              <span class="sys-msg">> Waiting for command...</span>
+            </div>
+          </div>
+          <div class="card">
+            <h2>Downloads</h2>
+            <a href="/capture.pcap" class="btn-download">Download .PCAP</a>
+            <a href="/capture.hccapx" class="btn-download">Download .HCCAPX</a>
+          </div>
+        </div>
+      </main>
+
+      <footer>
+        <div class="status-bar">
+          <span>STATE: <span id="footer-state">IDLE</span></span>
+          <span>TIME: <span id="footer-time">00:00:00</span></span>
+        </div>
+      </footer>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

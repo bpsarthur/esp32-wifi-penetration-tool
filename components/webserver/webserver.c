@@ -150,7 +150,7 @@ static esp_err_t uri_status_get_handler(httpd_req_t *req) {
     // first send attack result header
     ESP_ERROR_CHECK(httpd_resp_send_chunk(req, (char *) attack_status, 4));
     // send attack result content
-    if(((attack_status->state == FINISHED) || (attack_status->state == TIMEOUT)) && (attack_status->content_size > 0)){
+    if(((attack_status->state == ATTACK_FINISHED) || (attack_status->state == ATTACK_TIMEOUT)) && (attack_status->content_size > 0)){
         ESP_ERROR_CHECK(httpd_resp_send_chunk(req, attack_status->content, attack_status->content_size));
     }
     return httpd_resp_send_chunk(req, NULL, 0);

@@ -22,7 +22,7 @@
 #include "frame_analyzer.h"
 #include "frame_analyzer_types.h"
 
-static const char* TAG = "main:attack_pmkid";
+static const char* TAG __attribute__((unused)) = "main:attack_pmkid";
 static const wifi_ap_record_t *ap_record = NULL;
 
 /**
@@ -38,7 +38,7 @@ static const wifi_ap_record_t *ap_record = NULL;
  */
 static void pmkid_exit_condition_handler(void *args, esp_event_base_t event_base, int32_t event_id, void *event_data) {
     ESP_LOGD(TAG, "Got PMKID, stopping attack...");
-    attack_update_status(FINISHED);
+    attack_update_status(ATTACK_FINISHED);
     attack_pmkid_stop();
     
     pmkid_item_t *pmkid_item_head = *(pmkid_item_t **) event_data;

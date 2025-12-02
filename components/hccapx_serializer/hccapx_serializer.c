@@ -9,6 +9,7 @@
 #include "hccapx_serializer.h"
 
 #include <stdint.h>
+#include <arpa/inet.h>
 #include <string.h>
 #define LOG_LOCAL_LEVEL ESP_LOG_DEBUG
 #include "esp_log.h"

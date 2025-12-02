@@ -13,30 +13,30 @@
 #ifndef ATTACK_H
 #define ATTACK_H
 
+#include <stdint.h>
 #include "esp_wifi_types.h"
 
 /**
- * @brief Implemented attack types that can be chosen.
- * 
+ * @brief Enum for attack state
+ */
+typedef enum {
+    ATTACK_READY,      ///< no attack is in progress and results from previous attack run are available.
+    ATTACK_RUNNING,    ///< attack is in progress, attack_status_t.content may not be consistent.
+    ATTACK_FINISHED,   ///< last attack finsihed and results are available.
+    ATTACK_TIMEOUT     ///< last attack timed out. This option will be moved as sub category of FINISHED state.
+} attack_state_t;
+
+/**
+ * @brief Enum for attack type
  */
 typedef enum {
     ATTACK_TYPE_PASSIVE,
     ATTACK_TYPE_HANDSHAKE,
     ATTACK_TYPE_PMKID,
-    ATTACK_TYPE_DOS
+    ATTACK_TYPE_DOS,
+    ATTACK_TYPE_BEACON_SPAM,
+    ATTACK_TYPE_PROBE_SNIFF
 } attack_type_t;
-
-/**
- * @brief States of single attack run. 
- * 
- * @note TIMEOUT will be removed in #64
- */
-typedef enum {
-    READY,      ///< no attack is in progress and results from previous attack run are available.
-    RUNNING,    ///< attack is in progress, attack_status_t.content may not be consistent.
-    FINISHED,   ///< last attack finsihed and results are available.
-    TIMEOUT     ///< last attack timed out. This option will be moved as sub category of FINISHED state.
-} attack_state_t;
 
 /**
  * @brief Attack config parsed from webserver request

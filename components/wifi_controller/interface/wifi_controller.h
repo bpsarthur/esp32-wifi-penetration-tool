@@ -12,8 +12,8 @@
 #include <stdint.h>
 #include <unistd.h>
 
-#include "../ap_scanner.h"
-#include "../sniffer.h"
+#include "ap_scanner.h"
+#include "sniffer.h"
 
 #include "esp_wifi_types.h"
 
